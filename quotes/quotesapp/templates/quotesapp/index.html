@@ -1,0 +1,32 @@
+{% extends 'quotesapp/base.html' %} 
+{% block content %}
+<header style="margin-bottom: 2rem">
+    {% if user.is_authenticated %}
+    <button class="outline">
+        <a href="{% url 'quotesapp:add_quote' %}">Add New Quote</a>
+    </button>
+    {% else %}
+    <p>Please <a href="{% url 'quotesapp:login' %}">log in</a> to add new quotes.</p>
+    {% endif %}
+</header>
+<h3>Quotes:</h3>
+<ul>
+    {% for quote in quotes %}
+    <article class="grid">
+        <blockquote>
+            {{ quote.quote }}
+            <footer>
+                <div class="tags">
+                    {% for tag in quote.tags.all %}
+                    <button class="outline secondary" style="--width: fit-content; padding: 0.2rem 0.5rem; font-size: 0.7rem">{{ tag.name }}</button>
+                    {% endfor %}
+                </div>
+            </footer>
+            <footer>
+                <cite><a href="{% url 'quotesapp:author_detail' quote.author.id %}" style="text-decoration: none; color: inherit; hover:text-decoration: underline" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration='none'">{{ quote.author.full_name }}</a></cite>
+            </footer>
+        </blockquote>
+    </article>
+    {% endfor %}
+</ul>
+{% endblock %}

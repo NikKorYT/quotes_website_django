@@ -1,0 +1,10 @@
+{# quotesapp/templates/quotesapp/add_quote.html #}
+{% extends 'quotesapp/base.html' %}
+{% block content %}
+<h2>Add New Quote</h2>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Add Quote</button>
+</form>
+{% endblock %}

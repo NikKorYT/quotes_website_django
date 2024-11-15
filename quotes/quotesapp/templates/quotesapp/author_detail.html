@@ -1,0 +1,11 @@
+{% extends 'quotesapp/base.html' %} {% block content %}
+<article class="grid">
+    <div>
+        <h1>{{ author.full_name }}</h1>
+        <p><strong>Born:</strong> {{ author.born_date }} {{ author.born_location }}</p>
+        {% if author.description %}
+        <p>{{ author.description }}</p>
+        {% endif %}
+    </div>
+</article>
+{% endblock %}

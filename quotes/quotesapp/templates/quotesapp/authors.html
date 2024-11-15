@@ -1,0 +1,20 @@
+{% extends 'quotesapp/base.html' %} {% block content %}
+<header style="margin-bottom: 2rem">
+    {% if user.is_authenticated %}
+    <button class="outline">
+        <a href="{% url 'quotesapp:add_author' %}">Add New Author</a>
+    </button>
+    {% else %}
+    <p>Please <a href="{% url 'quotesapp:login' %}">log in</a> to add new authors.</p>
+    {% endif %}
+</header>
+<h3>Authors:</h3>
+
+<ul>
+    {% for author in authors %}
+    <li>
+        <a href="{% url 'quotesapp:author_detail' author.id %}">{{ author.full_name }}</a>
+    </li>
+    {% endfor %}
+</ul>
+{% endblock %}

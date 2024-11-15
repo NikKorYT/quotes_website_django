@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <title>{% block title %}Quotes!{% endblock %}</title>
+        {% load static %}
+        <link rel="stylesheet" href="https://unpkg.com/@picocss/pico@latest/css/pico.min.css" />
+        <link rel="icon" href="{% static 'quotesapp/images/quote.png' %}" type="image/png" />
+        <style>
+            button a,
+            button a:hover {
+                text-decoration: none;
+            }
+            li a,
+            li a:hover {
+                text-decoration: none;
+            }
+            .tag-select-multiple {
+                max-height: 200px;
+                overflow-y: auto;
+                border: 1px solid #ccc;
+                padding: 10px;
+                border-radius: 4px;
+                background: var(--background-color);
+            }
+
+            .tag-select-multiple div {
+                display: grid;
+                grid-template-columns: auto 1fr;
+                gap: 5px;
+                align-items: center;
+                margin: 5px 0;
+            }
+
+            .tag-select-multiple input[type="checkbox"] {
+                margin: 0;
+            }
+
+            .tag-select-multiple label {
+                margin: 0;
+                padding: 5px;
+            }
+        </style>
+    </head>
+    <body>
+        <header>
+            <nav class="container">
+                <ul>
+                    <h2>
+                        <li>
+                            <a href="{% url 'quotesapp:index' %}">
+                                <img src="{% static 'quotesapp/images/quote.png' %}" alt="Quote icon" style="height: 1em; vertical-align: middle; margin-right: 0.3em" />
+                                <strong>Quotes!</strong>
+                            </a>
+                        </li>
+                    </h2>
+                    <h3>
+                        <li><a href="{% url 'quotesapp:authors' %}">Authors</a></li>
+                    </h3>
+                </ul>
+                <ul>
+                    <h3>
+                        {% if user.is_authenticated %}
+                        <li>
+                            <span>Welcome, {{ user.username }}!</span>
+                        </li>
+                        <li>
+                            <form method="post" action="{% url 'quotesapp:logout' %}" style="margin: 0">
+                                {% csrf_token %}
+                                <button type="submit" class="outline" style="padding: 0.5rem 1rem; font-size: 1rem">Logout</button>
+                            </form>
+                        </li>
+                        {% else %}
+                        <li>
+                            <button class="outline"><a href="{% url 'quotesapp:login' %}">Log in</a></button>
+                        </li>
+                        <li>
+                            <button><a href="{% url 'quotesapp:signup' %}" class="contrast">Sign up</a></button>
+                        </li>
+                        {% endif %}
+                    </h3>
+                </ul>
+            </nav>
+        </header>
+        <main class="container">{% block content %} {% endblock %}</main>
+    </body>
+</html>
