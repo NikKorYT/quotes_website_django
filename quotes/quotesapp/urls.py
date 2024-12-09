@@ -18,4 +18,5 @@ urlpatterns = [
     path("authors/<int:author_id>/", views.author_detail, name="author_detail"),
     path('add-author/', views.add_author, name='add_author'),
     path('add_quote/', views.add_quote, name='add_quote'),
+    path('change-password/', views.change_password, name='change_password'),
 ]

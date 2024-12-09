@@ -70,6 +70,11 @@
                                 <button type="submit" class="outline" style="padding: 0.5rem 1rem; font-size: 1rem">Logout</button>
                             </form>
                         </li>
+                        <li>
+                            <a href="{% url 'quotesapp:change_password' %}">
+                                <button type="button" class="outline" style="padding: 0.5rem 1rem; font-size: 1rem">Change Password</button>
+                            </a>
+                        </li>
                         {% else %}
                         <li>
                             <button class="outline"><a href="{% url 'quotesapp:login' %}">Log in</a></button>

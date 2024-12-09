@@ -5,6 +5,8 @@ from django.contrib import messages
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from .forms import AuthorForm, QuoteForm
+from django.contrib.auth.forms import PasswordChangeForm
+from django.contrib.auth import update_session_auth_hash
 
 
 # Create your views here.
@@ -93,3 +95,24 @@ def add_quote(request):
     else:
         form = QuoteForm()
     return render(request, "quotesapp/add_quote.html", {"form": form})
+
+
+@login_required
+def change_password(request):
+    if request.method == 'POST':
+        form = PasswordChangeForm(request.user, request.POST)
+        if form.is_valid():
+            try:
+                user = form.save()
+                update_session_auth_hash(request, user)
+                messages.success(request, 'Password successfully updated!')
+                return redirect('quotesapp:index')
+            except Exception as e:
+                messages.error(request, f'Error changing password: {str(e)}')
+        else:
+            for field, errors in form.errors.items():
+                for error in errors:
+                    messages.error(request, f'{field}: {error}')
+    else:
+        form = PasswordChangeForm(request.user)
+    return render(request, 'quotesapp/change_password.html', {'form': form})
